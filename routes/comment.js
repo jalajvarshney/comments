@@ -53,7 +53,6 @@ router.get("/up/:id", middleware.isLoggedIn, (req, res)=>{
                         console.log(err);
                     }
                     else{
-                        console.log(updated);
                         res.redirect("/");
                     }
                 })
