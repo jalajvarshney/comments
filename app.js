@@ -10,18 +10,18 @@ var express = require("express"),
 
 // requiring routes
 var comment = require("./routes/comment.js");
+var indexRoutes = require("./routes/index")
 
 
 mongoose.connect("mongodb://localhost/comment");
 app.set("view engine", "ejs");
-app.use(comment);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 
 
 //passport config
 app.use(require("express-session")({
-    secret: "peeps don't know but baby i am out of snow #iykwim",
+    secret: "this is secret",
     resave: false,
     saveUninitialized: false
 }));
@@ -30,6 +30,15 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
+
+app.use(comment);
+app.use(indexRoutes);
+
 app.listen(3000, ()=>{
     console.log("Server running at 3000");
 })

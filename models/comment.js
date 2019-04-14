@@ -9,18 +9,8 @@ var commentSchema = mongoose.Schema({
         },
         username: String
     },
-    upvotes:[
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        }
-    ],
-    downvotes: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        }
-    ]
+    upvotes:[String],
+    downvotes: [String]
 });
 
 module.exports = mongoose.model("Comment", commentSchema);
